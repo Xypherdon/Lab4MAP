@@ -3,24 +3,22 @@ package Model;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 
-import java.util.List;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 
 public class Map {
-    private Cell[] mapData;
 
-    public Cell[] generateMapData(List<Integer> mapFileData) {
-        GridPane gridPane = new GridPane();
-        Cell[] mapRectangles = new Cell[99];
-        for (int i = 0; i < mapFileData.size(); i++) {
-            switch (mapFileData.get(i)) {
-                case 0: {
-                    mapRectangles[i].type = "empty";
-                }
-                case 1: {
-                    mapRectangles[i].type = "wall";
-                }
-            }
+    public static void readMapDataFromFile() {
+        try{
+            String[][] array = Files.lines(Paths.get("D:\\MAP\\Laborator\\Lab4\\Lab4MAP\\src\\Data\\maze.txt"))
+                    .map(s -> s.split("\\s+"))
+                    //.forEach(i->Integer.parseInt())
+                    .toArray(String[][]::new);
+        }catch(IOException e){
+            System.out.println("readMapDataFromFile WrongFilePath!");
         }
-        return new Cell[]{};
     }
+
 }
