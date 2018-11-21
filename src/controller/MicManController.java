@@ -15,7 +15,7 @@ import java.io.File;
 public class MicManController {
 
     public EventHandler<KeyEvent> keyListener = event -> {
-        if(event.getCode() == KeyCode.UP){
+        if (event.getCode() == KeyCode.UP) {
             moveUp();
         }else if(event.getCode() == KeyCode.DOWN){
             moveDown();

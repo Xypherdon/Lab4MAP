@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.event.EventHandler;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import model.Map;
@@ -20,8 +21,13 @@ public class Controller {
 
     public Group cellGroup;
     public static Rectangle[][] rectangles = new Rectangle[10][10];
+    public TextField ghostTextField;
+    public TextField speedTextField;
+
     public void beginButtonPressed(ActionEvent actionEvent) {
 
+        int numberOfGhosts=Integer.parseInt(ghostTextField.getText());
+        int speedOfGhosts =Integer.parseInt(speedTextField.getText());
         IntStream.range(0,10).forEach(x -> {
             IntStream.range(0, 10).forEach(y -> {
                 Rectangle rectangle = new Rectangle();
