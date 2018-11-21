@@ -8,6 +8,5 @@
    <children>
       <Button fx:id="beginButton" layoutX="1115.0" layoutY="118.0" mnemonicParsing="false" onAction="#beginButtonPressed" text="Button" />
       <Group fx:id="cellGroup" />
-      <Button fx:id="changeButton" layoutX="1115.0" layoutY="143.0" mnemonicParsing="false" onAction="#changeButtonPressed" text="Button" />
    </children>
 </AnchorPane>

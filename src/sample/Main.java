@@ -1,6 +1,7 @@
 package sample;
 
-import Model.Map;
+import controller.MicManController;
+import model.Map;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,11 +13,14 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Map.readMapDataFromFile();
-        Parent root=FXMLLoader.load(getClass().getResource("pac_man.fxml"));
-        primaryStage.setTitle("ehehe");
+        Parent root=FXMLLoader.load(getClass().getResource("MicMan.fxml"));
+        primaryStage.setTitle("MicMan");
         Scene scene = new Scene(root,1300,1000);
+        MicManController micManController =new MicManController();
+        scene.setOnKeyPressed(micManController.keyListener);
         primaryStage.setScene(scene);
         primaryStage.show();
+
     }
 
 
