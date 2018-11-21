@@ -1,9 +1,11 @@
 package sample;
 
+import controller.GhostController;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import model.Ghost;
 import model.Map;
 import model.MicMan;
 import model.Position;
@@ -15,6 +17,10 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 import java.io.File;
+import java.util.List;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.stream.IntStream;
 
 public class Controller {
@@ -26,8 +32,7 @@ public class Controller {
 
     public void beginButtonPressed(ActionEvent actionEvent) {
 
-        int numberOfGhosts=Integer.parseInt(ghostTextField.getText());
-        int speedOfGhosts =Integer.parseInt(speedTextField.getText());
+
         IntStream.range(0,10).forEach(x -> {
             IntStream.range(0, 10).forEach(y -> {
                 Rectangle rectangle = new Rectangle();
@@ -49,22 +54,37 @@ public class Controller {
                         break;
                 }
                 rectangle.setStroke(Color.web("#000000"));
+                generateGhosts();
                 cellGroup.getChildren().add(rectangle);
                 rectangles[x][y]=rectangle;
             });
         });
     }
-    private EventHandler<KeyEvent> keyListener = new EventHandler<KeyEvent>() {
-        @Override
-        public void handle(KeyEvent event) {
-            if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN ||
-                    event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.LEFT) {
-                Controller.rectangles[2][2].setFill(Color.RED);
+
+    public void generateGhosts(){
+        int numberOfGhosts=Integer.parseInt(ghostTextField.getText());
+        int speedOfGhosts =Integer.parseInt(speedTextField.getText());
+        List<GhostController> ghosts;
+        Random random = new Random();
+        IntStream.range(0,numberOfGhosts).forEach(i->{
+            int x=random.nextInt(10);
+            int y=random.nextInt(10);
+            if(Map.maze[x][y].equals("1")){
+                i--;
             }
-            else if(event.getCode() == KeyCode.SPACE) {
-                //your code for shooting the missile
+            else{
+                TimerTask timerTask = new TimerTask(){
+                    public void run(){
+                        new GhostController(new Ghost(new Position(x,y)));
+                    }
+                };
+                Timer timer = new Timer("Timer");
+
+                long delay = 1000/60;
+                timer.schedule(timerTask,delay);
             }
-            event.consume();
-        }
-    };
+
+        });
+
+    }
 }

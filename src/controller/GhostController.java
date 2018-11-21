@@ -31,13 +31,13 @@ public class GhostController implements Runnable {
     public void moveGhost() {
         Random random = new Random();
         int nextMove = random.nextInt(4);
-        if (nextMove == 1) {
+        if (nextMove == 0) {
             moveUp();
-        } else if (nextMove == 2) {
+        } else if (nextMove == 1) {
             moveDown();
-        } else if (nextMove == 3) {
+        } else if (nextMove == 2) {
             moveLeft();
-        } else if (nextMove == 4) {
+        } else if (nextMove == 3) {
             moveRight();
         }
     }

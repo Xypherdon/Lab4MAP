@@ -10,6 +10,6 @@
       <Button fx:id="beginButton" layoutX="1115.0" layoutY="118.0" mnemonicParsing="false" onAction="#beginButtonPressed" text="Button" />
       <Group fx:id="cellGroup" />
       <TextField fx:id="ghostTextField" layoutX="1115.0" layoutY="151.0" promptText="Number of ghosts" />
-      <TextField layoutX="1115.0" layoutY="187.0" promptText="Speed of ghosts" />
+      <TextField fx:id="speedTextField" layoutX="1115.0" layoutY="187.0" promptText="Speed of ghosts" />
    </children>
 </AnchorPane>
