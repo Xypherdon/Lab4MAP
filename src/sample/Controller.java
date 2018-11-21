@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import model.Ghost;
 import model.Map;
 import model.MicMan;
@@ -17,15 +18,12 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 import java.io.File;
-import java.util.List;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public class Controller {
 
-    public Group cellGroup;
+    public  Group cellGroup;
     public static Rectangle[][] rectangles = new Rectangle[10][10];
     public TextField ghostTextField;
     public TextField speedTextField;
@@ -54,35 +52,32 @@ public class Controller {
                         break;
                 }
                 rectangle.setStroke(Color.web("#000000"));
-                generateGhosts();
                 cellGroup.getChildren().add(rectangle);
                 rectangles[x][y]=rectangle;
             });
         });
+        generateGhosts();
     }
 
     public void generateGhosts(){
+
         int numberOfGhosts=Integer.parseInt(ghostTextField.getText());
         int speedOfGhosts =Integer.parseInt(speedTextField.getText());
-        List<GhostController> ghosts;
+        List<Position> emptyList = new ArrayList<>();
         Random random = new Random();
+        IntStream.range(0,10).forEach(x->{
+            IntStream.range(0,10).forEach(y->{
+                if(Map.maze[x][y].equals("0")){
+                    emptyList.add(new Position(x,y));
+                }
+            });
+        });
         IntStream.range(0,numberOfGhosts).forEach(i->{
-            int x=random.nextInt(10);
-            int y=random.nextInt(10);
-            if(Map.maze[x][y].equals("1")){
-                i--;
-            }
-            else{
-                TimerTask timerTask = new TimerTask(){
-                    public void run(){
-                        new GhostController(new Ghost(new Position(x,y)));
-                    }
-                };
-                Timer timer = new Timer("Timer");
-
-                long delay = 1000/60;
-                timer.schedule(timerTask,delay);
-            }
+            Position position = emptyList.remove(random.nextInt(emptyList.size()));
+            Ghost ghost = new Ghost(position);
+            GhostController ghostController = new GhostController(ghost);
+            Timer timer = new Timer();
+            timer.scheduleAtFixedRate(ghostController.timerTask,0,1000/speedOfGhosts);
 
         });
 
