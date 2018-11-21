@@ -31,7 +31,7 @@ public class GhostController {
     public TimerTask timerTask = new TimerTask(){
         public void run(){
             if(moveGhost()==2){
-
+                System.exit(1);
             }
         }
     };
